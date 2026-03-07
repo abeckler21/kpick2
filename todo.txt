@@ -1,0 +1,21 @@
+TODO
+
+1. (eve) upload 2-3 patterns for testing
+
+
+VIEWS
+- myProjects view (eve)
+- projectDescription view (eve)
+- stitchCounter view (eve)
+- allPatterns view 
+- categoryPatterns view
+- patternDetail view
+- tool view (similar to stitch view) (abby)
+- stitch view (similar to tool view) (abby)
+- stitchDescription view (abby)
+
+Remember To Do Later: 
+- accessibility audit (try in voiceover mode)
+- animations 
+- app icon, launch screen, splash screen 
+- rate this app alert
