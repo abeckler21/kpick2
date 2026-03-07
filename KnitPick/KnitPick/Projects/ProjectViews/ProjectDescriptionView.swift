@@ -8,6 +8,7 @@
 // todo
 import SwiftUI
 import SwiftData
+import PDFKit
 // source: https://developer.apple.com/documentation/SwiftData/Defining-data-relationships-with-enumerations-and-model-classes
 // source: https://www.hackingwithswift.com/quick-start/swiftdata/how-to-define-swiftdata-models-using-the-model-macro
 
@@ -16,7 +17,6 @@ struct ProjectDescriptionView: View {
     @State private var showEditor = false
     // use this to add patterns while app is running
     @Environment(\.modelContext) private var context
-    // TODO: make a "pattern repeater remember" system so that you can mark what stitch you left off on and can pick up from there
     let columns = [GridItem(.adaptive(minimum: 120), spacing: 20)]
     var body: some View {
         VStack {
@@ -46,7 +46,12 @@ struct ProjectDescriptionView: View {
             HStack {
                 LinePlaceHolderTableView()
             }
-            Text("body")
+            // if taken from the patterns page, add the pdf here so the person can see it 
+            if let pdfName = project.pdfFileName {
+                PDFViewer(fileName: pdfName)
+                    .frame(height: 400)
+                    .padding()
+            }
             
         }
         .frame(maxWidth: .infinity)
