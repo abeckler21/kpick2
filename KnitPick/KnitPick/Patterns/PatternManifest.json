@@ -1,0 +1,425 @@
+[
+  {
+    "id": "2026-winter-games-hat",
+    "title": "2026 Winter Games Hat",
+    "pdfFileName": "2026_Winter_Games_Hat.pdf",
+    "category": "Hats",
+    "difficulty": "Beginner",
+    "estimatedHours": 4,
+    "tags": ["hat", "beanie", "winter"]
+  },
+  {
+    "id": "a-simple-snowflake-headband",
+    "title": "A Simple Snowflake Headband",
+    "pdfFileName": "A_Simple_Snowflake_Headband.pdf",
+    "category": "Headbands",
+    "difficulty": "Beginner",
+    "estimatedHours": 2,
+    "tags": ["headband", "ear warmer"]
+  },
+  {
+    "id": "aconite-top",
+    "title": "Aconite Top",
+    "pdfFileName": "Aconite_top.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 10,
+    "tags": ["top", "garment"]
+  },
+  {
+    "id": "aiyu-tee",
+    "title": "Aiyu Tee",
+    "pdfFileName": "Aiyu_Tee.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 10,
+    "tags": ["tee", "shirt", "garment"]
+  },
+  {
+    "id": "avenue-scarf",
+    "title": "Avenue Scarf",
+    "pdfFileName": "Avenue_Scarf.pdf",
+    "category": "Scarves",
+    "difficulty": "Beginner",
+    "estimatedHours": 5,
+    "tags": ["scarf", "accessory"]
+  },
+  {
+    "id": "blue-cascade-afghan-square",
+    "title": "Blue Cascade Afghan Square",
+    "pdfFileName": "Blue_Cascade_Afghan_Square_.pdf",
+    "category": "Blankets",
+    "difficulty": "Intermediate",
+    "estimatedHours": 4,
+    "tags": ["blanket", "afghan", "square"]
+  },
+  {
+    "id": "cluckadoodledoo",
+    "title": "Cluckadoodledoo",
+    "pdfFileName": "Cluckadoodledoo.pdf",
+    "category": "Toys",
+    "difficulty": "Intermediate",
+    "estimatedHours": 6,
+    "tags": ["toy", "animal"]
+  },
+  {
+    "id": "coco-top",
+    "title": "Coco Top",
+    "pdfFileName": "Coco_top.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 8,
+    "tags": ["top", "garment"]
+  },
+  {
+    "id": "comfy-gusset-mittens",
+    "title": "Comfy Gusset Mittens",
+    "pdfFileName": "Comfy_Gusset_Mittens.pdf",
+    "category": "Mittens",
+    "difficulty": "Intermediate",
+    "estimatedHours": 6,
+    "tags": ["mittens", "gloves", "winter"]
+  },
+  {
+    "id": "dragon-egg-dice-bag",
+    "title": "Dragon Egg Dice Bag",
+    "pdfFileName": "Dragon_egg_dice_bag.pdf",
+    "category": "Bags",
+    "difficulty": "Intermediate",
+    "estimatedHours": 3,
+    "tags": ["bag", "dice bag"]
+  },
+  {
+    "id": "entrelac-scarf",
+    "title": "Entrelac Scarf",
+    "pdfFileName": "Entrelac_Scarf.pdf",
+    "category": "Scarves",
+    "difficulty": "Advanced",
+    "estimatedHours": 8,
+    "tags": ["scarf", "entrelac"]
+  },
+  {
+    "id": "flaminia-top",
+    "title": "Flaminia Top",
+    "pdfFileName": "Flaminia_top.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 10,
+    "tags": ["top", "garment"]
+  },
+  {
+    "id": "haru-vneck-sweater",
+    "title": "Haru Vneck Sweater",
+    "pdfFileName": "Haru-Vneck_Sweater.pdf",
+    "category": "Sweaters",
+    "difficulty": "Intermediate",
+    "estimatedHours": 16,
+    "tags": ["sweater", "garment"]
+  },
+  {
+    "id": "headband",
+    "title": "Headband",
+    "pdfFileName": "Headband.pdf",
+    "category": "Headbands",
+    "difficulty": "Beginner",
+    "estimatedHours": 2,
+    "tags": ["headband", "ear warmer"]
+  },
+  {
+    "id": "hely-mittens",
+    "title": "Hely Mittens",
+    "pdfFileName": "Hely_mittens.pdf",
+    "category": "Mittens",
+    "difficulty": "Intermediate",
+    "estimatedHours": 5,
+    "tags": ["mittens"]
+  },
+  {
+    "id": "julvanten-mittens",
+    "title": "Julvanten Mittens",
+    "pdfFileName": "Julvanten_mittens.pdf",
+    "category": "Mittens",
+    "difficulty": "Intermediate",
+    "estimatedHours": 5,
+    "tags": ["mittens"]
+  },
+  {
+    "id": "lieve-headband",
+    "title": "Lieve Headband",
+    "pdfFileName": "Lieve_Headband.pdf",
+    "category": "Headbands",
+    "difficulty": "Beginner",
+    "estimatedHours": 2,
+    "tags": ["headband"]
+  },
+  {
+    "id": "little-mouse",
+    "title": "Little Mouse",
+    "pdfFileName": "Little_Mouse.pdf",
+    "category": "Toys",
+    "difficulty": "Intermediate",
+    "estimatedHours": 5,
+    "tags": ["toy", "mouse"]
+  },
+  {
+    "id": "luma",
+    "title": "Luma",
+    "pdfFileName": "Luma.pdf",
+    "category": "Other",
+    "difficulty": "Intermediate",
+    "estimatedHours": 6,
+    "tags": ["other"]
+  },
+  {
+    "id": "maja-cardigan",
+    "title": "Maja Cardigan",
+    "pdfFileName": "Maja_Cardigan.pdf",
+    "category": "Sweaters",
+    "difficulty": "Intermediate",
+    "estimatedHours": 18,
+    "tags": ["cardigan", "garment"]
+  },
+  {
+    "id": "mareep",
+    "title": "Mareep",
+    "pdfFileName": "Mareep.pdf",
+    "category": "Toys",
+    "difficulty": "Intermediate",
+    "estimatedHours": 6,
+    "tags": ["toy", "pokemon"]
+  },
+  {
+    "id": "midas-hat",
+    "title": "Midas Hat",
+    "pdfFileName": "Midas_Hat.pdf",
+    "category": "Hats",
+    "difficulty": "Intermediate",
+    "estimatedHours": 4,
+    "tags": ["hat", "beanie"]
+  },
+  {
+    "id": "navy-sailor-bag",
+    "title": "Navy Sailor Bag",
+    "pdfFileName": "Navy_Sailor_Bag.pdf",
+    "category": "Bags",
+    "difficulty": "Intermediate",
+    "estimatedHours": 5,
+    "tags": ["bag"]
+  },
+  {
+    "id": "nova-sweater",
+    "title": "Nova Sweater",
+    "pdfFileName": "Nova_Sweater.pdf",
+    "category": "Sweaters",
+    "difficulty": "Intermediate",
+    "estimatedHours": 16,
+    "tags": ["sweater"]
+  },
+  {
+    "id": "ocean-waves-kimono-sweater",
+    "title": "Ocean Waves Kimono Sweater",
+    "pdfFileName": "Ocean_Waves_Kimono_Sweater.pdf",
+    "category": "Sweaters",
+    "difficulty": "Advanced",
+    "estimatedHours": 20,
+    "tags": ["sweater", "kimono"]
+  },
+  {
+    "id": "old-shale-scarf",
+    "title": "Old Shale Scarf",
+    "pdfFileName": "Old_Shale_Scarf.pdf",
+    "category": "Scarves",
+    "difficulty": "Beginner",
+    "estimatedHours": 5,
+    "tags": ["scarf"]
+  },
+  {
+    "id": "perfect-sense-wrap",
+    "title": "Perfect Sense Wrap",
+    "pdfFileName": "Perfect_Sense_Wrap.pdf",
+    "category": "Scarves",
+    "difficulty": "Intermediate",
+    "estimatedHours": 7,
+    "tags": ["wrap", "shawl"]
+  },
+  {
+    "id": "piitu-mittens",
+    "title": "Piitu Mittens",
+    "pdfFileName": "Piitu_Mittens.pdf",
+    "category": "Mittens",
+    "difficulty": "Intermediate",
+    "estimatedHours": 5,
+    "tags": ["mittens"]
+  },
+  {
+    "id": "pineapple-tank-top",
+    "title": "Pineapple Tank Top",
+    "pdfFileName": "Pineapple_tank_top.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 8,
+    "tags": ["tank", "top"]
+  },
+  {
+    "id": "poliwhirl",
+    "title": "Poliwhirl",
+    "pdfFileName": "Poliwhirl.pdf",
+    "category": "Toys",
+    "difficulty": "Intermediate",
+    "estimatedHours": 6,
+    "tags": ["toy", "pokemon"]
+  },
+  {
+    "id": "roomy-raglan-pattern",
+    "title": "Roomy Raglan Pattern",
+    "pdfFileName": "Roomy_Raglan_Pattern.pdf",
+    "category": "Sweaters",
+    "difficulty": "Intermediate",
+    "estimatedHours": 16,
+    "tags": ["raglan", "sweater"]
+  },
+  {
+    "id": "sambuco-blanket",
+    "title": "Sambuco Blanket",
+    "pdfFileName": "Sambuco_blanket.pdf",
+    "category": "Blankets",
+    "difficulty": "Intermediate",
+    "estimatedHours": 12,
+    "tags": ["blanket"]
+  },
+  {
+    "id": "sara-fingerless-mittens",
+    "title": "Sara Fingerless Mittens",
+    "pdfFileName": "Sara_fingerless_mittens.pdf",
+    "category": "Mittens",
+    "difficulty": "Beginner",
+    "estimatedHours": 4,
+    "tags": ["mittens", "fingerless"]
+  },
+  {
+    "id": "seamless-tote-bag",
+    "title": "Seamless Tote Bag",
+    "pdfFileName": "Seamless_Tote_Bag.pdf",
+    "category": "Bags",
+    "difficulty": "Intermediate",
+    "estimatedHours": 5,
+    "tags": ["bag", "tote"]
+  },
+  {
+    "id": "summer-with-the-elves-top",
+    "title": "Summer with the Elves Top",
+    "pdfFileName": "Summer_with_the_Elves_top.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 9,
+    "tags": ["top"]
+  },
+  {
+    "id": "taiyo-linier-wrap",
+    "title": "Taiyo Linier Wrap",
+    "pdfFileName": "Taiyo_Linier_Wrap.pdf",
+    "category": "Scarves",
+    "difficulty": "Intermediate",
+    "estimatedHours": 7,
+    "tags": ["wrap", "shawl"]
+  },
+  {
+    "id": "the-frances-shawl",
+    "title": "The Frances Shawl",
+    "pdfFileName": "The_Frances_Shawl.pdf",
+    "category": "Scarves",
+    "difficulty": "Intermediate",
+    "estimatedHours": 8,
+    "tags": ["shawl"]
+  },
+  {
+    "id": "the-morse-code-ear-warmer",
+    "title": "The Morse Code Ear Warmer",
+    "pdfFileName": "The_Morse_Code_Ear_Warmer.pdf",
+    "category": "Headbands",
+    "difficulty": "Beginner",
+    "estimatedHours": 2,
+    "tags": ["ear warmer", "headband"]
+  },
+  {
+    "id": "tiny-apple",
+    "title": "Tiny Apple",
+    "pdfFileName": "Tiny_Apple.pdf",
+    "category": "Toys",
+    "difficulty": "Beginner",
+    "estimatedHours": 2,
+    "tags": ["toy", "apple"]
+  },
+  {
+    "id": "twinkle-toes-baby-blanket",
+    "title": "Twinkle Toes Baby Blanket",
+    "pdfFileName": "Twinkle_Toes_Baby_Blanket.pdf",
+    "category": "Blankets",
+    "difficulty": "Intermediate",
+    "estimatedHours": 10,
+    "tags": ["blanket", "baby"]
+  },
+  {
+    "id": "winter-lights-pattern",
+    "title": "Winter Lights Pattern",
+    "pdfFileName": "Winter_Lights_Pattern.pdf",
+    "category": "Other",
+    "difficulty": "Intermediate",
+    "estimatedHours": 6,
+    "tags": ["other", "winter"]
+  },
+  {
+    "id": "bird",
+    "title": "Bird",
+    "pdfFileName": "bird.pdf",
+    "category": "Toys",
+    "difficulty": "Beginner",
+    "estimatedHours": 3,
+    "tags": ["toy", "bird"]
+  },
+  {
+    "id": "em-beanie",
+    "title": "Em Beanie",
+    "pdfFileName": "em_beanie.pdf",
+    "category": "Hats",
+    "difficulty": "Beginner",
+    "estimatedHours": 4,
+    "tags": ["beanie", "hat"]
+  },
+  {
+    "id": "lobster-top-star",
+    "title": "Lobster Top Star",
+    "pdfFileName": "lobster_top_star.pdf",
+    "category": "Tops",
+    "difficulty": "Intermediate",
+    "estimatedHours": 8,
+    "tags": ["top"]
+  },
+  {
+    "id": "oscar-scarf",
+    "title": "Oscar Scarf",
+    "pdfFileName": "oscar_scarf.pdf",
+    "category": "Scarves",
+    "difficulty": "Beginner",
+    "estimatedHours": 5,
+    "tags": ["scarf"]
+  },
+  {
+    "id": "strangling-vine-scarf",
+    "title": "Strangling Vine Scarf",
+    "pdfFileName": "strangling_vine_scarf.pdf",
+    "category": "Scarves",
+    "difficulty": "Intermediate",
+    "estimatedHours": 7,
+    "tags": ["scarf"]
+  },
+  {
+    "id": "waffle-stitch-blanket",
+    "title": "Waffle Stitch Blanket",
+    "pdfFileName": "waffle_stitch_blanket.pdf",
+    "category": "Blankets",
+    "difficulty": "Beginner",
+    "estimatedHours": 8,
+    "tags": ["blanket"]
+  }
+]

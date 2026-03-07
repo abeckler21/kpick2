@@ -15,6 +15,12 @@ struct ContentView: View {
                     Image(systemName: "folder")
                     Text("Projects")
                 }
+            
+            ToolView()
+                .tabItem { Label("Tools", systemImage: "wrench.and.screwdriver") }
+            
+            PatternsTabView()
+                    .tabItem { Label("All Patterns", systemImage: "square.grid.2x2") }
         }
     }
 }
