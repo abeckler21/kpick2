@@ -11,8 +11,8 @@ import SwiftData
 struct KnitPickApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.font, Font.custom("Pixelstitch", size: 16))
+            // make WithSplash view appear
+            WithSplashView()
         }
         .modelContainer(for: Project.self)
     }
