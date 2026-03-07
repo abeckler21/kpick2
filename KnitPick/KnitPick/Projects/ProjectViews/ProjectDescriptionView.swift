@@ -18,6 +18,13 @@ struct ProjectDescriptionView: View {
     // use this to add patterns while app is running
     @Environment(\.modelContext) private var context
     let columns = [GridItem(.adaptive(minimum: 120), spacing: 20)]
+    
+    // build a remote pdf url only if this project has a pdf filename
+    var rawPDFURL: URL? {
+        guard let pdfFileName = project.pdfFileName else { return nil }
+        return URL(string: "https://raw.githubusercontent.com/etanios03/knitpick-patterns/main/\(pdfFileName)")
+    }
+    
     var body: some View {
         VStack {
             VStack {
@@ -32,6 +39,14 @@ struct ProjectDescriptionView: View {
                     .padding()
                 }
                 .frame(maxWidth: .infinity)
+                
+                // only show the pdf if this project has one
+                if let pdfURL = rawPDFURL {
+                    PDFRemoteView(url: pdfURL)
+                        .frame(height: 400)
+                        .padding(.horizontal)
+                }
+                
                 Button("Add Counter") {
                     let newCounter = Counter(name: "Global")
                     project.counters.append(newCounter)
@@ -46,13 +61,6 @@ struct ProjectDescriptionView: View {
             HStack {
                 LinePlaceHolderTableView()
             }
-            // if taken from the patterns page, add the pdf here so the person can see it 
-            if let pdfName = project.pdfFileName {
-                PDFViewer(fileName: pdfName)
-                    .frame(height: 400)
-                    .padding()
-            }
-            
         }
         .frame(maxWidth: .infinity)
     }

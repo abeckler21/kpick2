@@ -84,6 +84,7 @@ struct PatternDetailView: View {
             name: pattern.displayTitle,
             counters: [Counter(name: "Global", count: 0)]
         )
+        newProject.pdfFileName = pattern.pdfFileName
         context.insert(newProject)
         justAdded = true
     }
@@ -91,7 +92,6 @@ struct PatternDetailView: View {
 
 struct PDFRemoteView: View {
     let url: URL?
-
     var body: some View {
         Group {
             if let url {
@@ -106,14 +106,12 @@ struct PDFRemoteView: View {
 
 struct PDFKitRepresentedView: UIViewRepresentable {
     let url: URL
-
     func makeUIView(context: Context) -> PDFView {
         let pdfView = PDFView()
         pdfView.autoScales = true
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
         pdfView.backgroundColor = .clear
-
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
@@ -126,9 +124,7 @@ struct PDFKitRepresentedView: UIViewRepresentable {
                 print("Failed to load remote PDF: \(error)")
             }
         }
-
         return pdfView
     }
-
     func updateUIView(_ uiView: PDFView, context: Context) {}
 }
