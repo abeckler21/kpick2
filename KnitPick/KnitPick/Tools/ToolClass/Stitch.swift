@@ -11,12 +11,14 @@ import SwiftUI
 // Stitch.swift: Stitch type, extension with data
 
 struct Stitch: Identifiable, Hashable {
+    // Stitch: define a stitch struct w/id, name, and instructions
     let id = UUID()
     let name: String
     let howTo: String
 }
 
 
+// define dictionary of stitches for Common Stitches page
 extension Stitch {
     static let sample: [Stitch] = [
         Stitch(

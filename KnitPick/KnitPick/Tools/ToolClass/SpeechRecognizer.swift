@@ -11,9 +11,11 @@ import Speech
 import AVFoundation
 import Observation
 
+// SpeechRecognizer.swift: define the SpeechRecognizer class for next counter
 
 @Observable
 class SpeechRecognizer {
+    // SpeechRecognizer: class to record, transcribe, and count occurrences of 'next'
     var isRecording = false
     var transcribedText = ""
     var nextCount = 0
@@ -23,8 +25,8 @@ class SpeechRecognizer {
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     
-    // Request authorizations on app launch
     func requestPermissions() {
+        // requestPermissions: request authorizations on app launch
         SFSpeechRecognizer.requestAuthorization { authStatus in
             DispatchQueue.main.async {
                 switch authStatus {
@@ -38,13 +40,14 @@ class SpeechRecognizer {
     }
     
     func startRecording() {
-        // Clear previous state
+        // startRecording: begin recording
         if recognitionTask != nil {
+            // clear prev state
             recognitionTask?.cancel()
             recognitionTask = nil
         }
         
-        // Setup Audio Session
+        // setup Audio Session
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
@@ -56,7 +59,7 @@ class SpeechRecognizer {
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create request") }
-        recognitionRequest.shouldReportPartialResults = true // Gives us live updates
+        recognitionRequest.shouldReportPartialResults = true // give us live updates
         
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -78,14 +81,14 @@ class SpeechRecognizer {
             return
         }
         
-        // Start the recognition task
+        // start the recognition task
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
             var isFinal = false
             
             if let result = result {
                 let text = result.bestTranscription.formattedString
                 
-                // Update the UI on the main thread
+                // update the UI on the main thread w/transcription
                 DispatchQueue.main.async {
                     self.transcribedText = text
                     self.countNextWords(in: text)
@@ -106,18 +109,19 @@ class SpeechRecognizer {
     }
     
     func stopRecording() {
+        // stopRecording: stop the recording
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)
         recognitionRequest?.endAudio()
         isRecording = false
     }
     
-    // Logic to count the occurrences of the word "next"
     private func countNextWords(in text: String) {
-        // Lowercase the text, split it by spaces and newlines
+        // countNextWords: logic to count the occurrences of the word "next"
+        // lowercase the text, split it by spaces and newlines
         let words = text.lowercased().components(separatedBy: .whitespacesAndNewlines)
         
-        // Filter out punctuation and find exact matches for "next"
+        // filter out punctuation and find exact matches for "next"
         let count = words.filter { word in
             let cleanedWord = word.trimmingCharacters(in: .punctuationCharacters)
             return cleanedWord == "next"

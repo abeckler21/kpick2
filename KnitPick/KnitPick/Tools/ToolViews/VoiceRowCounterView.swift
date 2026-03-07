@@ -8,7 +8,10 @@
 import Foundation
 import SwiftUI
 
+// VoiceRowCounterView.swift: define view for voice-controlled row counter
+
 struct VoiceRowCounterView: View {
+    // VoiceRowCounterView: define the view using a SpeechRecognizer
     @State private var recognizer = SpeechRecognizer()
 
     var body: some View {
@@ -38,6 +41,7 @@ struct VoiceRowCounterView: View {
 
             Spacer()
 
+            // button to start/stop recognizer
             Button {
                 if recognizer.isRecording {
                     recognizer.stopRecording()
