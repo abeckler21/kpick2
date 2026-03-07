@@ -10,15 +10,16 @@ import PDFKit
 import Combine
 import UIKit
 
-// defines different cropping behaviors depending on where the thumbnail is used
+// PDFThumbnailLoader.swift: define images for backgrounds of cards on Patterns/Category page
+
 enum ThumbnailCropStyle {
+    // ThumbnailCropStyle: defines different cropping behaviors depending on where the thumbnail is used
     case category
     case pattern
 }
 
-
 @MainActor
-final class PDFThumbnailLoader: ObservableObject {
+class PDFThumbnailLoader: ObservableObject {
     // PDFThumbnailLoader: generate cropped thumbnails from remote pdf files
     @Published var image: UIImage?
 
@@ -31,40 +32,28 @@ final class PDFThumbnailLoader: ObservableObject {
         do {
             // download the pdf data from the remote url
             let (data, _) = try await URLSession.shared.data(from: url)
-
-            // create a pdf document and grab the first page
             guard let document = PDFDocument(data: data),
                   let firstPage = document.page(at: 0) else {
                 return
             }
 
-            // render the first page into a large image
+            // render the first page into an image and crop to fit card
             let renderedSize = CGSize(width: 1400, height: 2000)
             let fullPageImage = firstPage.thumbnail(of: renderedSize, for: .mediaBox)
-
-            // crop the rendered image to fit the card layout
             let cropped = cropForCard(
                 fullPageImage,
                 targetAspectRatio: targetSize.width / targetSize.height,
                 cropStyle: cropStyle
             )
-
-            // publish the final image to update the view
             self.image = cropped
-
         } catch {
             // print error if the pdf fails to load
             print("Failed to load PDF thumbnail: \(error)")
         }
     }
 
-    // crops the rendered pdf page to match the card aspect ratio
-    private func cropForCard(
-        _ image: UIImage,
-        targetAspectRatio: CGFloat,
-        cropStyle: ThumbnailCropStyle
-    ) -> UIImage {
-        // get the underlying cgimage for cropping
+    func cropForCard(_ image: UIImage, targetAspectRatio: CGFloat, cropStyle: ThumbnailCropStyle) -> UIImage {
+        // cropForCard: crops the rendered pdf page to match the card aspect ratio
         guard let cgImage = image.cgImage else { return image }
 
         let width = CGFloat(cgImage.width)
@@ -76,29 +65,23 @@ final class PDFThumbnailLoader: ObservableObject {
             imageHeight: height,
             cropStyle: cropStyle
         )
-
         let workingAspect = workingRect.width / workingRect.height
         var cropRect: CGRect
 
         // crop horizontally if the working area is too wide
         if workingAspect > targetAspectRatio {
-
             let cropWidth = workingRect.height * targetAspectRatio
             let x = workingRect.minX + (workingRect.width - cropWidth) / 2
-
             cropRect = CGRect(
                 x: x,
                 y: workingRect.minY,
                 width: cropWidth,
                 height: workingRect.height
             )
-
         } else {
-
             // crop vertically if the working area is too tall
             let cropHeight = workingRect.width / targetAspectRatio
             let y = workingRect.minY + (workingRect.height - cropHeight) / 2
-
             cropRect = CGRect(
                 x: workingRect.minX,
                 y: y,
@@ -107,10 +90,8 @@ final class PDFThumbnailLoader: ObservableObject {
             )
         }
 
-        // ensure crop stays inside the image bounds
+        // crop it
         cropRect = cropRect.intersection(CGRect(x: 0, y: 0, width: width, height: height))
-
-        // perform the crop
         guard let croppedCGImage = cgImage.cropping(to: cropRect.integral) else {
             return image
         }
@@ -123,13 +104,8 @@ final class PDFThumbnailLoader: ObservableObject {
         )
     }
 
-    // defines which part of the pdf page contains the important visual content
-    private func contentFocusedRect(
-        imageWidth: CGFloat,
-        imageHeight: CGFloat,
-        cropStyle: ThumbnailCropStyle
-    ) -> CGRect {
-
+    func contentFocusedRect(imageWidth: CGFloat, imageHeight: CGFloat, cropStyle: ThumbnailCropStyle) -> CGRect {
+        // contentFocusedRect: defines which part of the pdf page contains the important visual content
         switch cropStyle {
 
         // category tiles: keep most of the center content
