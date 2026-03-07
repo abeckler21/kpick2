@@ -15,6 +15,8 @@ import PDFKit
 struct ProjectDescriptionView: View {
     @Bindable var project: Project
     @State private var showEditor = false
+    // this is the line counter
+    @State private var showLineCounter = false
     // use this to add patterns while app is running
     @Environment(\.modelContext) private var context
     let columns = [GridItem(.adaptive(minimum: 120), spacing: 20)]
@@ -26,42 +28,76 @@ struct ProjectDescriptionView: View {
     }
     
     var body: some View {
-        VStack {
             VStack {
                 Text(project.name)
-                ScrollView {
+                    .font(.largeTitle.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                HStack {
+                    Button() {
+                        let newCounter = Counter(name: "Global")
+                        project.counters.append(newCounter)
+                    }
+                    label: {
+                        Label("Add Counter", systemImage: "plus")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.title)
+                    Button() {
+                        showEditor = true
+                    }
+                    label: {
+                        Label("Edit Counter", systemImage: "pencil")
+                    }
+                    Button() {
+                        //VoiceRowCounterView()
+                    }
+                    label: {
+                        Label("Audio", systemImage: "microphone")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.title)
+                }
+                .padding(.horizontal)
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Counters")
+                        .font(.headline)
+
                     LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(project.counters) { counter in
                             CounterView(counter: counter)
                         }
-
                     }
-                    .padding()
                 }
-                .frame(maxWidth: .infinity)
+                .padding()
+                .background(.title.opacity(0.3))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal)
                 
                 // only show the pdf if this project has one
                 if let pdfURL = rawPDFURL {
                     PDFRemoteView(url: pdfURL)
-                        .frame(height: 400)
+                        .frame(height: 350)
                         .padding(.horizontal)
                 }
                 
-                Button("Add Counter") {
-                    let newCounter = Counter(name: "Global")
-                    project.counters.append(newCounter)
-                }
-                Button("Edit Counters") {
-                    showEditor = true
+            }
+            // hamburger menu for the line placeholder sheet
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showLineCounter = true
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                    }
                 }
             }
             .sheet(isPresented: $showEditor) {
                 CounterEditorView(project: project)
             }
-            HStack {
+            .sheet(isPresented: $showLineCounter) {
                 LinePlaceHolderTableView()
             }
-        }
         .frame(maxWidth: .infinity)
     }
 }

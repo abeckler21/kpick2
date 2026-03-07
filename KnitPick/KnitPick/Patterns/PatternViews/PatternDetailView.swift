@@ -110,7 +110,8 @@ struct PDFKitRepresentedView: UIViewRepresentable {
         let pdfView = PDFView()
         pdfView.autoScales = true
         pdfView.displayMode = .singlePageContinuous
-        pdfView.displayDirection = .vertical
+        pdfView.usePageViewController(true)
+        pdfView.displayDirection = .horizontal
         pdfView.backgroundColor = .clear
         Task {
             do {

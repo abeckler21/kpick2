@@ -11,21 +11,22 @@ import SwiftData
 struct CounterView: View {
     @Bindable var counter: Counter
     var body: some View {
-        Text("\(counter.name)")
-        HStack {
-            Button("-") {
-                if counter.count > 0 {
-                    counter.count-=1
+        VStack {
+            Text("\(counter.name)")
+            HStack {
+                Button("-") {
+                    if counter.count > 0 {
+                        counter.count-=1
+                    }
                 }
+                .buttonStyle(.borderedProminent)
+                Text("\(counter.count)")
+                Button("+") {
+                    counter.count+=1
+                }
+                .buttonStyle(.borderedProminent)
             }
-            .buttonStyle(.borderedProminent)
-            Text("\(counter.count)")
-            Button("+") {
-                counter.count+=1
-            }
-            .buttonStyle(.borderedProminent)
         }
-        .padding()
         .background(.gray.opacity(0.15))
         .cornerRadius(12)
         .frame(maxWidth: .infinity)
