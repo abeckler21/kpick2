@@ -10,6 +10,7 @@ import SwiftData
 
 struct CounterView: View {
     @Bindable var counter: Counter
+    
     var body: some View {
         VStack {
             Text("\(counter.name)")

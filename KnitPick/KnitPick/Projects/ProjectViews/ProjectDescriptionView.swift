@@ -14,6 +14,8 @@ import PDFKit
 
 struct ProjectDescriptionView: View {
     @Bindable var project: Project
+    // for voice recording increment function
+    @State private var recognizer = SpeechRecognizer()
     @State private var showEditor = false
     // this is the line counter
     @State private var showLineCounter = false
@@ -50,7 +52,13 @@ struct ProjectDescriptionView: View {
                         Label("Edit Counter", systemImage: "pencil")
                     }
                     Button() {
-                        //VoiceRowCounterView()
+                        // start or stop audio recording
+                        if recognizer.isRecording {
+                            recognizer.stopRecording()
+                        } else {
+                            recognizer.requestPermissions()
+                            recognizer.startRecording()
+                        }
                     }
                     label: {
                         Label("Audio", systemImage: "microphone")
@@ -97,6 +105,14 @@ struct ProjectDescriptionView: View {
             }
             .sheet(isPresented: $showLineCounter) {
                 LinePlaceHolderTableView()
+            }
+            .onChange(of: recognizer.nextCount) { oldValue, newValue in
+                guard recognizer.isRecording else { return }
+
+                if let counter = project.counters.first,
+                   newValue > counter.count {
+                    counter.count = newValue
+                }
             }
         .frame(maxWidth: .infinity)
     }
