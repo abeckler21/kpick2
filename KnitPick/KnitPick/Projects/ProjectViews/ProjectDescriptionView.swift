@@ -56,7 +56,6 @@ struct ProjectDescriptionView: View {
                         if recognizer.isRecording {
                             recognizer.stopRecording()
                         } else {
-                            recognizer.requestPermissions()
                             recognizer.startRecording()
                         }
                     }
@@ -113,6 +112,9 @@ struct ProjectDescriptionView: View {
                    newValue > counter.count {
                     counter.count = newValue
                 }
+            }
+            .onAppear {
+                recognizer.requestPermissions()
             }
         .frame(maxWidth: .infinity)
     }
