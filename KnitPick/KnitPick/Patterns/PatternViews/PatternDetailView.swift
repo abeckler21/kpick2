@@ -2,14 +2,21 @@
 //  PatternDetailView.swift
 //  KnitPick
 //
-//  Created by Abigail Beckler on 3/7/26.
-//
 
 import SwiftUI
 import PDFKit
+import SwiftData
 
 struct PatternDetailView: View {
     let pattern: PatternItem
+
+    @Environment(\.modelContext) private var context
+    @Query private var projects: [Project]
+    @State private var justAdded = false
+
+    private var alreadyAdded: Bool {
+        projects.contains { $0.name == pattern.displayTitle }
+    }
 
     var body: some View {
         ScrollView {
@@ -44,11 +51,41 @@ struct PatternDetailView: View {
 
                 PDFRemoteView(url: pattern.rawPDFURL)
                     .frame(minHeight: 600)
+
+                Button {
+                    addToProjects()
+                } label: {
+                    Text(buttonTitle)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(alreadyAdded)
+                .padding(.top, 8)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var buttonTitle: String {
+        if (alreadyAdded || justAdded) {
+            return "Added!"
+        } else {
+            return "Add to My Projects"
+        }
+    }
+
+    private func addToProjects() {
+        guard !alreadyAdded else { return }
+
+        let newProject = Project(
+            name: pattern.displayTitle,
+            counters: [Counter(name: "Global", count: 0)]
+        )
+        context.insert(newProject)
+        justAdded = true
     }
 }
 
