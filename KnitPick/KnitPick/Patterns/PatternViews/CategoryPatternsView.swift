@@ -5,12 +5,15 @@
 //  Created by Abigail Beckler on 3/7/26.
 //
 
+import Foundation
 import SwiftUI
 
+// CategoryPatternsView.swift: define view of a specific category full of patterns
+
 struct CategoryPatternsView: View {
+    // CategoryPatternsView: view showing all patterns inside a selected category
     let category: PatternCategory
     private let repository = PatternRepository.shared
-
     private var patterns: [PatternItem] {
         repository.patterns(in: category, from: repository.loadPatterns())
     }
@@ -18,10 +21,12 @@ struct CategoryPatternsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                // display category name
                 Text(category.name)
                     .font(.system(size: 34, weight: .bold))
                     .padding(.top, 8)
 
+                // display each pattern
                 ForEach(patterns) { pattern in
                     NavigationLink(value: PatternRoute.pattern(pattern)) {
                         ZStack(alignment: .bottomLeading) {
@@ -33,6 +38,7 @@ struct CategoryPatternsView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
 
+                            // add gradient to make text more legible
                             LinearGradient(
                                 colors: [.clear, .black.opacity(0.18), .black.opacity(0.62)],
                                 startPoint: .top,
@@ -63,6 +69,7 @@ struct CategoryPatternsView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
+        // set navigation bar title to the category name
         .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
     }

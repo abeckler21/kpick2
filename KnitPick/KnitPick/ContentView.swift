@@ -19,7 +19,7 @@ struct ContentView: View {
             ToolView()
                 .tabItem { Label("Tools", systemImage: "wrench.and.screwdriver") }
             
-            PatternsTabView()
+            CategoriesView()
                     .tabItem { Label("All Patterns", systemImage: "square.grid.2x2") }
         }
     }

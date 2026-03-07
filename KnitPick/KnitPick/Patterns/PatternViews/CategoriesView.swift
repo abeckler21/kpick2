@@ -1,23 +1,26 @@
 //
-//  PatternsTabView.swift
+//  CategoriesView.swift
 //  KnitPick
 //
 //  Created by Abigail Beckler on 3/7/26.
 //
 
+import Foundation
 import SwiftUI
 
+// CategoriesView.swift: define the Category tab view w/search capabilities
+
 enum PatternRoute: Hashable {
+    // PatternRoute: navigation routes used within the patterns tab
     case category(PatternCategory)
     case pattern(PatternItem)
 }
 
-struct PatternsTabView: View {
+struct CategoriesView: View {
+    // CategoriesView: main view for the patterns tab
     @State private var path: [PatternRoute] = []
     @State private var searchText = ""
-
     private let repository = PatternRepository.shared
-
     private let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 20),
         GridItem(.flexible(), spacing: 20)
@@ -27,8 +30,8 @@ struct PatternsTabView: View {
         repository.loadPatterns()
     }
 
-    private var filteredCategories: [PatternCategory] {
-        repository.categoriesMatching(searchText, from: allPatterns)
+    private var allCategories: [PatternCategory] {
+        repository.categories(from: allPatterns)
     }
 
     private var matchingPatterns: [PatternItem] {
@@ -50,6 +53,7 @@ struct PatternsTabView: View {
                         .background(Color(.systemGray6))
                         .clipShape(RoundedRectangle(cornerRadius: 14))
 
+                    // show search results only when the user enters text
                     if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !matchingPatterns.isEmpty {
                         Text("Matching Patterns")
                             .font(.headline)
@@ -82,18 +86,23 @@ struct PatternsTabView: View {
                         }
                     }
 
+                    // section header for category grid
                     Text("Categories")
                         .font(.headline)
                         .padding(.top, 8)
 
+                    // grid of pattern categories
                     LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(filteredCategories) { category in
-                            let previewPattern = repository.representativePattern(for: category, from: allPatterns)
+                        ForEach(allCategories) { category in
+                            // choose the first pattern in the category to use to generate the category thumbnail
+                            let previewPattern = repository.firstPattern(for: category, from: allPatterns)
 
+                            // button navigates to the selected category
                             Button {
                                 path.append(.category(category))
                             } label: {
                                 ZStack(alignment: .bottomLeading) {
+                                    // category preview image generated from a pattern pdf
                                     PDFThumbnailView(
                                         url: previewPattern?.rawPDFURL,
                                         targetSize: CGSize(width: 320, height: 320),
@@ -102,6 +111,7 @@ struct PatternsTabView: View {
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .clipped()
 
+                                    // gradient to make text more legible
                                     LinearGradient(
                                         colors: [.clear, .black.opacity(0.18), .black.opacity(0.62)],
                                         startPoint: .top,
@@ -113,6 +123,7 @@ struct PatternsTabView: View {
                                         .foregroundStyle(.white)
                                         .padding(14)
                                 }
+                                // styluing for the category cards
                                 .frame(height: 150)
                                 .background(Color(.systemGray5))
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -126,11 +137,11 @@ struct PatternsTabView: View {
                 .padding(.bottom, 24)
             }
             .navigationBarTitleDisplayMode(.inline)
+            // define navigation destinations for routes
             .navigationDestination(for: PatternRoute.self) { route in
                 switch route {
                 case .category(let category):
                     CategoryPatternsView(category: category)
-
                 case .pattern(let pattern):
                     PatternDetailView(pattern: pattern)
                 }
