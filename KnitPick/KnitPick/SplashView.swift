@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// SplashView.swift: define the splash screen to be shown on launch
+
 struct SplashView: View {
     // SplashView: define the splash screen
     let onFinish: () -> Void

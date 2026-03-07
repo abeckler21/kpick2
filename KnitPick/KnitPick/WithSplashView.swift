@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// WithSplashView.swift: define app w/splash view shown on launch
+
 struct WithSplashView: View {
     // WithSplashView: identical to old KnitPickApp but w/splash screen capabilities upon launch
     @State private var showSplash = true
