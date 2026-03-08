@@ -22,7 +22,7 @@ Remember To Do Later:
 
 
 TODO EVE SUNDAY: 
-1. Connect audio to all counters (add a screen to pick which counter to increment)
+[DONE] 1. Connect audio to all counters (add a screen to pick which counter to increment)
 [DONE] Edit project names
 3. Edit "Block" section: add row counters, adaptable size block names
 4. Notepad/upload pattern section for the parts that don't have pdf
