@@ -6,5 +6,10 @@
 	<array>
 		<string>Pixelstitch.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>Launch</string>
+	</dict>
 </dict>
 </plist>

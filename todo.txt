@@ -27,5 +27,9 @@ TODO EVE SUNDAY:
 3. Edit "Block" section: add row counters, adaptable size block names
 4. Notepad/upload pattern section for the parts that don't have pdf
 5. FIX AUDIO ISSUES
-6. Edit toolbar icons to yarn ball
-7. Make "cutesy" 
+6. document in a README file
+7. Code comments (like crazy)
+8. Launch screen
+9. Make splash screen more verbose
+10. Accessibility audit and VoiceOver testing
+11. Rate this app alert
