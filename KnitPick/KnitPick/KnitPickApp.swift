@@ -26,6 +26,10 @@ struct KnitPickApp: App {
             formatter.timeStyle = .short
             defaults.set(formatter.string(from: launchDate), forKey: "initial_launch")
         }
+        
+        // increment number of launches for Rate this App alert
+        let currentCount = defaults.integer(forKey: "launch_count")
+        defaults.set(currentCount + 1, forKey: "launch_count")
     }
 
     // define app view

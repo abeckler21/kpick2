@@ -12,10 +12,27 @@ import SwiftUI
 struct WithSplashView: View {
     // WithSplashView: identical to old KnitPickApp but w/splash screen capabilities upon launch
     @State private var showSplash = true
+    @State private var showRateAlert = false
+    let count = UserDefaults.standard.integer(forKey: "launch_count")
+
     var body: some View {
         ZStack {
             ContentView()
                 .environment(\.font, Font.custom("Pixelstitch", size: 16))
+            
+                // if third launch, show rating alert
+                .onAppear {
+                    if (count == 3) {
+                        print("hello")
+                        showRateAlert = true
+                    }
+                }
+                .alert("Rate this App", isPresented: $showRateAlert) {
+                    Button("Rate Now", role: .cancel) {}
+                    Button("Maybe Later", role: .cancel) {}
+                } message: {
+                    Text("If you enjoy Knit Pick, please consider rating it in the App Store!")
+                }
 
             if showSplash {
                 // if we should show splash, set the splashview to show
