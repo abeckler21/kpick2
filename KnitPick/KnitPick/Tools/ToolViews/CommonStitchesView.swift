@@ -32,5 +32,14 @@ struct CommonStitchesView: View {
         .navigationTitle("Common Stitches")
         .navigationBarTitleDisplayMode(.large)
         .searchable(text: $query, prompt: "Search stitches")
+        
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Stitch instructions and images sourced from [this blog](https://blog.weareknitters.com/knitting-stitches/7-types-of-knitting-stitches-that-every-beginner-needs-to-know/)")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.top, 12)
+        
+        Spacer()
     }
 }
