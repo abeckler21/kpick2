@@ -99,6 +99,9 @@ struct ToolCard: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title.replacingOccurrences(of: "\n", with: " "))
+        .accessibilityHint("Opens tool")
     }
 }
 
