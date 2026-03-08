@@ -46,12 +46,12 @@ struct SplashView: View {
             .padding()
         }
         .contentShape(Rectangle())
-        // make disappear on tap or after 3 seconds
+        // make disappear on tap or after 2 seconds
         .onTapGesture {
             onFinish()
         }
         .task {
-            try? await Task.sleep(for: .seconds(3))
+            try? await Task.sleep(for: .seconds(2))
             onFinish()
         }
     }
