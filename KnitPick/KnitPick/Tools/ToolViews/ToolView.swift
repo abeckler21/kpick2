@@ -31,7 +31,7 @@ struct ToolView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     Text("Tools")
-                        .font(.custom("Pixelstitch", size: 36))
+                        .font(.system(size: 36, weight: .bold))
                         .padding(.top, 8)
 
                     LazyVGrid(columns: columns, spacing: 20) {

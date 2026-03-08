@@ -31,7 +31,7 @@ struct SplashView: View {
                         .foregroundColor(Color.white.opacity(0.8))
                 }
 
-                Text("browse patterns • track progress • start knitting")
+                Text("save projects • explore tools • browse patterns")
                     .font(.system(size: 15, weight: .regular))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 30)
