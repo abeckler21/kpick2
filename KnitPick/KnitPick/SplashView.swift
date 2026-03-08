@@ -15,8 +15,8 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            // set splash screen background to black
-            Color.black
+            // set splash screen background
+            Color(.systemBackground)
                 .ignoresSafeArea()
 
             VStack(spacing: 24) {
@@ -25,14 +25,16 @@ struct SplashView: View {
                 VStack(spacing: 10) {
                     Text("KnitPick")
                         .font(.system(size: 40, weight: .bold))
+                        .foregroundStyle(.primary)
 
                     Text("by Eve Tanios & Abby Beckler")
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(Color.white.opacity(0.8))
+                        .foregroundStyle(.primary)
                 }
 
                 Text("save projects • explore tools • browse patterns")
                     .font(.system(size: 15, weight: .regular))
+                    .foregroundStyle(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 30)
 
@@ -40,7 +42,7 @@ struct SplashView: View {
 
                 Text("tap to continue")
                     .font(.system(size: 14))
-                    .foregroundColor(.white.opacity(0.55))
+                    .foregroundStyle(.primary)
                     .padding(.bottom, 30)
             }
             .padding()
