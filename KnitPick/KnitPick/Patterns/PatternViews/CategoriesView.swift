@@ -110,6 +110,7 @@ struct CategoriesView: View {
                                     )
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .clipped()
+                                    .accessibilityHidden(true)
 
                                     // gradient to make text more legible
                                     LinearGradient(
@@ -117,6 +118,7 @@ struct CategoriesView: View {
                                         startPoint: .top,
                                         endPoint: .bottom
                                     )
+                                    .accessibilityHidden(true)
 
                                     Text(category.name)
                                         .font(.system(size: 18, weight: .semibold))
@@ -130,6 +132,9 @@ struct CategoriesView: View {
                                 .contentShape(RoundedRectangle(cornerRadius: 16))
                             }
                             .buttonStyle(.plain)
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel(category.name)
+                            .accessibilityHint("Opens category")
                         }
                     }
                 }

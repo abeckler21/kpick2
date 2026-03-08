@@ -37,13 +37,14 @@ struct CategoryPatternsView: View {
                             )
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
+                            .accessibilityHidden(true)
 
-                            // add gradient to make text more legible
                             LinearGradient(
                                 colors: [.clear, .black.opacity(0.18), .black.opacity(0.62)],
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
+                            .accessibilityHidden(true)
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(pattern.displayTitle)
@@ -64,6 +65,10 @@ struct CategoryPatternsView: View {
                         .contentShape(RoundedRectangle(cornerRadius: 16))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(pattern.displayTitle)
+                    .accessibilityValue("\(pattern.difficulty.rawValue), \(pattern.estimatedHours) hours")
+                    .accessibilityHint("Opens pattern details")
                 }
             }
             .padding(.horizontal, 20)

@@ -33,7 +33,7 @@ struct PatternDetailView: View {
                 // define pattern metadata block
                 HStack {
                     Spacer()
-
+                    
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Category: \(pattern.category)")
                         Text("Difficulty: \(pattern.difficulty.rawValue)")
@@ -45,7 +45,7 @@ struct PatternDetailView: View {
                     .background(Color(.systemGray6))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .frame(maxWidth: 280)
-
+                    
                     Spacer()
                 }
 
@@ -58,6 +58,7 @@ struct PatternDetailView: View {
                 // display the PDF of the pattern
                 PDFRemoteView(url: pattern.rawPDFURL)
                     .frame(minHeight: 600)
+                    .accessibilityHidden(true)
 
                 // 'Add to my projects' button
                 Button {
@@ -70,6 +71,7 @@ struct PatternDetailView: View {
                 .buttonStyle(.borderedProminent)
                 .disabled(alreadyAdded)
                 .padding(.top, 8)
+                .accessibilityHint(alreadyAdded ? "This pattern is already in your projects" : "Adds this pattern to your projects")
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
