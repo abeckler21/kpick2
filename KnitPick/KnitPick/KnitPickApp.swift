@@ -9,6 +9,26 @@ import SwiftUI
 import SwiftData
 @main
 struct KnitPickApp: App {
+    // initialize preferences at launch
+    init() {
+        UserDefaults.standard.register(defaults: [
+            "developer_names": "Eve Tanios and Abby Beckler",
+            "initial_launch": "Not yet set"
+        ])
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "Initial Launch") == nil {
+            let launchDate = Date()
+            defaults.set(launchDate, forKey: "Initial Launch")
+
+            // format launch date as readable string
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            defaults.set(formatter.string(from: launchDate), forKey: "initial_launch")
+        }
+    }
+
+    // define app view
     var body: some Scene {
         WindowGroup {
             // make WithSplash view appear
