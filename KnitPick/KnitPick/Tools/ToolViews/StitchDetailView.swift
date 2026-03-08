@@ -30,6 +30,13 @@ struct StitchDetailView: View {
                     .font(.system(size: 16))
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Image(stitch.image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .padding(.top, 8)
 
                 Spacer(minLength: 24)
             }
