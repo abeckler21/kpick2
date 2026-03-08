@@ -18,6 +18,7 @@ enum PatternRoute: Hashable {
 
 struct CategoriesView: View {
     // CategoriesView: main view for the patterns tab
+    @StateObject private var networkMonitor = NetworkMonitor()
     @State private var path: [PatternRoute] = []
     @State private var searchText = ""
     private let repository = PatternRepository.shared
@@ -42,113 +43,131 @@ struct CategoriesView: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("All Patterns")
-                        .font(.system(size: 36, weight: .bold))
-                        .padding(.top, 8)
-
-                    TextField("Search categories or patterns", text: $searchText)
-                        .padding(12)
-                        .background(Color(.systemGray6))
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
-
-                    // show search results only when the user enters text
-                    if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !matchingPatterns.isEmpty {
-                        Text("Matching Patterns")
-                            .font(.headline)
-                            .padding(.top, 6)
-
-                        VStack(spacing: 12) {
-                            ForEach(matchingPatterns.prefix(5)) { pattern in
-                                Button {
-                                    path.append(.pattern(pattern))
-                                } label: {
-                                    HStack {
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            Text(pattern.displayTitle)
-                                                .font(.system(size: 16, weight: .semibold))
-                                                .foregroundStyle(.primary)
-
-                                            Text("\(pattern.category) • \(pattern.difficulty.rawValue)")
-                                                .font(.caption)
-                                                .foregroundStyle(.secondary)
+            if networkMonitor.isConnected {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("All Patterns")
+                            .font(.system(size: 36, weight: .bold))
+                            .padding(.top, 8)
+                        
+                        TextField("Search categories or patterns", text: $searchText)
+                            .padding(12)
+                            .background(Color(.systemGray6))
+                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                        
+                        // show search results only when the user enters text
+                        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !matchingPatterns.isEmpty {
+                            Text("Matching Patterns")
+                                .font(.headline)
+                                .padding(.top, 6)
+                            
+                            VStack(spacing: 12) {
+                                ForEach(matchingPatterns.prefix(5)) { pattern in
+                                    Button {
+                                        path.append(.pattern(pattern))
+                                    } label: {
+                                        HStack {
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(pattern.displayTitle)
+                                                    .font(.system(size: 16, weight: .semibold))
+                                                    .foregroundStyle(.primary)
+                                                
+                                                Text("\(pattern.category) • \(pattern.difficulty.rawValue)")
+                                                    .font(.caption)
+                                                    .foregroundStyle(.secondary)
+                                            }
+                                            
+                                            Spacer()
                                         }
-
-                                        Spacer()
+                                        .padding()
+                                        .background(Color(.systemGray6))
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
                                     }
-                                    .padding()
-                                    .background(Color(.systemGray6))
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                        }
+                        
+                        // section header for category grid
+                        Text("Categories")
+                            .font(.headline)
+                            .padding(.top, 8)
+                        
+                        // grid of pattern categories
+                        LazyVGrid(columns: columns, spacing: 20) {
+                            ForEach(allCategories) { category in
+                                // choose the first pattern in the category to use to generate the category thumbnail
+                                let previewPattern = repository.firstPattern(for: category, from: allPatterns)
+                                
+                                // button navigates to the selected category
+                                Button {
+                                    path.append(.category(category))
+                                } label: {
+                                    ZStack(alignment: .bottomLeading) {
+                                        // category preview image generated from a pattern pdf
+                                        PDFThumbnailView(
+                                            url: previewPattern?.rawPDFURL,
+                                            targetSize: CGSize(width: 320, height: 320),
+                                            cropStyle: .category
+                                        )
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        .clipped()
+                                        .accessibilityHidden(true)
+                                        
+                                        // gradient to make text more legible
+                                        LinearGradient(
+                                            colors: [.clear, .black.opacity(0.18), .black.opacity(0.62)],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+                                        .accessibilityHidden(true)
+                                        
+                                        Text(category.name)
+                                            .font(.system(size: 18, weight: .semibold))
+                                            .foregroundStyle(.white)
+                                            .padding(14)
+                                    }
+                                    // styluing for the category cards
+                                    .frame(height: 150)
+                                    .background(Color(.systemGray5))
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                    .contentShape(RoundedRectangle(cornerRadius: 16))
                                 }
                                 .buttonStyle(.plain)
+                                .accessibilityElement(children: .ignore)
+                                .accessibilityLabel(category.name)
+                                .accessibilityHint("Opens category")
                             }
                         }
                     }
-
-                    // section header for category grid
-                    Text("Categories")
-                        .font(.headline)
-                        .padding(.top, 8)
-
-                    // grid of pattern categories
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(allCategories) { category in
-                            // choose the first pattern in the category to use to generate the category thumbnail
-                            let previewPattern = repository.firstPattern(for: category, from: allPatterns)
-
-                            // button navigates to the selected category
-                            Button {
-                                path.append(.category(category))
-                            } label: {
-                                ZStack(alignment: .bottomLeading) {
-                                    // category preview image generated from a pattern pdf
-                                    PDFThumbnailView(
-                                        url: previewPattern?.rawPDFURL,
-                                        targetSize: CGSize(width: 320, height: 320),
-                                        cropStyle: .category
-                                    )
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    .clipped()
-                                    .accessibilityHidden(true)
-
-                                    // gradient to make text more legible
-                                    LinearGradient(
-                                        colors: [.clear, .black.opacity(0.18), .black.opacity(0.62)],
-                                        startPoint: .top,
-                                        endPoint: .bottom
-                                    )
-                                    .accessibilityHidden(true)
-
-                                    Text(category.name)
-                                        .font(.system(size: 18, weight: .semibold))
-                                        .foregroundStyle(.white)
-                                        .padding(14)
-                                }
-                                // styluing for the category cards
-                                .frame(height: 150)
-                                .background(Color(.systemGray5))
-                                .clipShape(RoundedRectangle(cornerRadius: 16))
-                                .contentShape(RoundedRectangle(cornerRadius: 16))
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityElement(children: .ignore)
-                            .accessibilityLabel(category.name)
-                            .accessibilityHint("Opens category")
-                        }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 24)
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                // define navigation destinations for routes
+                .navigationDestination(for: PatternRoute.self) { route in
+                    switch route {
+                    case .category(let category):
+                        CategoryPatternsView(category: category)
+                    case .pattern(let pattern):
+                        PatternDetailView(pattern: pattern)
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 24)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            // define navigation destinations for routes
-            .navigationDestination(for: PatternRoute.self) { route in
-                switch route {
-                case .category(let category):
-                    CategoryPatternsView(category: category)
-                case .pattern(let pattern):
-                    PatternDetailView(pattern: pattern)
+            } else {
+                // message for when not on the internet
+                VStack(spacing: 16) {
+                    Spacer()
+                    Image(systemName: "wifi.slash")
+                        .font(.system(size: 40))
+                        .foregroundStyle(.secondary)
+                    
+                    Text("Connect to the internet to see patterns")
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 40)
+                    
+                    Spacer()
                 }
             }
         }
