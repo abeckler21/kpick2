@@ -13,8 +13,28 @@ struct MyProjectsView: View {
     @Query var projects: [Project]
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
+    @State var showEditor: Bool = false
     var body: some View {
         NavigationStack {
+            HStack {
+                Button() {
+                    let newProject = Project(name: "New Project", counters: [Counter(name: "Global")])
+                    context.insert(newProject)
+                }
+                label: {
+                    Label("Add", systemImage: "plus")
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.title)
+                Button() {
+                    showEditor = true
+                }
+                label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.title)
+            }
             List {
                 ForEach(projects) { item in
                     NavigationLink(value: item) {
@@ -27,10 +47,6 @@ struct MyProjectsView: View {
             .navigationTitle("My Projects")
             .navigationDestination(for: Project.self) { proj in ProjectDescriptionView(project: proj)
             }
-            Button("Add Project") {
-                let newProject = Project(name: "New Project", counters: [Counter(name: "Global")])
-                context.insert(newProject)
-            }
         }
         // for swipe to delete 
         .toolbar {
@@ -42,6 +58,9 @@ struct MyProjectsView: View {
         }
         .onAppear {
             addStarterProjects()
+        }
+        .sheet(isPresented: $showEditor) {
+            ProjectEditorView()
         }
     }
     

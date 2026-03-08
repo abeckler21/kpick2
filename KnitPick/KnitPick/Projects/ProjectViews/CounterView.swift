@@ -21,11 +21,13 @@ struct CounterView: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(.title)
                 Text("\(counter.count)")
                 Button("+") {
                     counter.count+=1
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(.title)
             }
         }
         .background(.gray.opacity(0.15))

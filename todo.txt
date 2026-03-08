@@ -19,3 +19,13 @@ Remember To Do Later:
 - animations 
 - app icon, launch screen, splash screen 
 - rate this app alert
+
+
+TODO EVE SUNDAY: 
+1. Connect audio to all counters (add a screen to pick which counter to increment)
+[DONE] Edit project names
+3. Edit "Block" section: add row counters, adaptable size block names
+4. Notepad/upload pattern section for the parts that don't have pdf
+5. FIX AUDIO ISSUES
+6. Edit toolbar icons to yarn ball
+7. Make "cutesy" 
