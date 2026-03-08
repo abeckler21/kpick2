@@ -13,7 +13,6 @@ struct WithSplashView: View {
     // WithSplashView: identical to old KnitPickApp but w/splash screen capabilities upon launch
     @State private var showSplash = true
     @State private var showRateAlert = false
-    let count = UserDefaults.standard.integer(forKey: "launch_count")
 
     var body: some View {
         ZStack {
@@ -22,6 +21,7 @@ struct WithSplashView: View {
             
                 // if third launch, show rating alert
                 .onAppear {
+                    let count = UserDefaults.standard.integer(forKey: "launch_count")
                     if (count == 3) {
                         print("hello")
                         showRateAlert = true

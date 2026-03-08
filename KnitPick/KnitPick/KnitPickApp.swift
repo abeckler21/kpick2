@@ -16,9 +16,9 @@ struct KnitPickApp: App {
             "initial_launch": "Not yet set"
         ])
         let defaults = UserDefaults.standard
-        if defaults.object(forKey: "Initial Launch") == nil {
+        if defaults.object(forKey: "initial_launch") == nil {
             let launchDate = Date()
-            defaults.set(launchDate, forKey: "Initial Launch")
+            defaults.set(launchDate, forKey: "initial_launch")
 
             // format launch date as readable string
             let formatter = DateFormatter()
