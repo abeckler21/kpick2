@@ -22,12 +22,14 @@ struct CounterView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.title)
+                .accessibilityLabel("Subtract from Row Count")
                 Text("\(counter.count)")
                 Button("+") {
                     counter.count+=1
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.title)
+                .accessibilityLabel("Add to Row Count")
             }
         }
         .background(.gray.opacity(0.15))

@@ -24,10 +24,10 @@ Remember To Do Later:
 TODO EVE SUNDAY: 
 [DONE] 1. Connect audio to all counters (add a screen to pick which counter to increment)
 [DONE] Edit project names
-4. Notepad/upload pattern section for the parts that don't have pdf
+[DONE] Notepad/upload pattern section for the parts that don't have pdf
+[DONE] Launch screen
 5. FIX AUDIO ISSUES
 6. document in a README file
 7. Code comments (like crazy)
-[DONE] Launch screen
 9. Make splash screen more verbose
 10. Accessibility audit and VoiceOver testing

@@ -61,13 +61,6 @@ struct ProjectDescriptionView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
             
-            /*// only show the pdf if this project has one
-             if let pdfURL = rawPDFURL {
-             PDFRemoteView(url: pdfURL)
-             .frame(height: 350)
-             .padding(.horizontal)
-             }
-             }*/
             // MARK: PATTERN PDF DISPLAY
             if let pdfURL = rawPDFURL {
                 PDFRemoteView(url: pdfURL)
@@ -76,7 +69,7 @@ struct ProjectDescriptionView: View {
                 
             } else {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Pattern")
+                    Text("Pattern Notes")
                         .font(.headline)
                     
                     if showPatternEditor || project.patternText != nil {
@@ -100,6 +93,7 @@ struct ProjectDescriptionView: View {
                         } label: {
                             Label("Add Pattern", systemImage: "text.badge.plus")
                         }
+                        .accessibilityLabel("Add Pattern Button")
                         .buttonStyle(.borderedProminent)
                         .tint(.title)
                         
@@ -149,6 +143,7 @@ private extension ProjectDescriptionView {
             label: {
                 Label("Add", systemImage: "plus")
             }
+            .accessibilityLabel("Add Counter")
             .buttonStyle(.borderedProminent)
             .tint(.title)
             Button() {
@@ -157,6 +152,7 @@ private extension ProjectDescriptionView {
             label: {
                 Label("Edit", systemImage: "pencil")
             }
+            .accessibilityLabel("Edit Existing Counters")
             .buttonStyle(.borderedProminent)
             .tint(.title)
             Button() {
@@ -169,8 +165,9 @@ private extension ProjectDescriptionView {
                 }
             }
             label: {
-                Label("Audio", systemImage: "microphone")
+                Label(audioIsSelected ? "Stop" : "Audio", systemImage: "microphone")
             }
+            .accessibilityLabel(recognizer.isRecording ? "Stop Audio Recording" : "Start Audio Recording")
             .buttonStyle(.borderedProminent)
             .tint(audioIsSelected ? .accent : .title)
         }

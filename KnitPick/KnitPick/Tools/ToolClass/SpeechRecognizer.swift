@@ -50,7 +50,7 @@ class SpeechRecognizer {
         // setup Audio Session
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+            try audioSession.setCategory(.playAndRecord,mode: .default,options: [.mixWithOthers, .defaultToSpeaker])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
             print("Audio session setup failed: \(error.localizedDescription)")
