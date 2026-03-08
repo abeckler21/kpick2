@@ -16,11 +16,11 @@ struct ProjectDescriptionView: View {
     @Bindable var project: Project
     // for the audio button
     @State private var audioIsSelected = false
+    // pattern editor to make your own pattern if no pdf visible
+    @State private var showPatternEditor = false
     // for voice recording increment function
     @State private var recognizer = SpeechRecognizer()
     @State private var showEditor = false
-    // this is the line counter
-    @State private var showLineCounter = false
     // use this to add patterns while app is running
     @Environment(\.modelContext) private var context
     
@@ -38,75 +38,102 @@ struct ProjectDescriptionView: View {
     }
     
     var body: some View {
-            VStack {
-                Text(project.name)
-                    .font(.largeTitle.bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                Buttons
+        VStack {
+            Text(project.name)
+                .font(.largeTitle.bold())
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Counters")
-                        .font(.headline)
-                    ScrollView {
-                        LazyVGrid(columns: columns, spacing: 15) {
-                            ForEach(project.counters) { counter in
-                                CounterView(counter: counter)
-                            }
+            Buttons
+                .padding(.horizontal)
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Counters")
+                    .font(.headline)
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 15) {
+                        ForEach(project.counters) { counter in
+                            CounterView(counter: counter)
                         }
                     }
                 }
-                .padding()
-                .background(.title.opacity(0.3))
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal)
-                
-                // only show the pdf if this project has one
-                if let pdfURL = rawPDFURL {
-                    PDFRemoteView(url: pdfURL)
-                        .frame(height: 350)
-                        .padding(.horizontal)
-                }
             }
-            // hamburger menu for the line placeholder sheet
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showLineCounter = true
-                    } label: {
-                        Image(systemName: "line.3.horizontal")
+            .padding()
+            .background(.title.opacity(0.3))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal)
+            
+            /*// only show the pdf if this project has one
+             if let pdfURL = rawPDFURL {
+             PDFRemoteView(url: pdfURL)
+             .frame(height: 350)
+             .padding(.horizontal)
+             }
+             }*/
+            // MARK: PATTERN PDF DISPLAY
+            if let pdfURL = rawPDFURL {
+                PDFRemoteView(url: pdfURL)
+                    .frame(height: 350)
+                    .padding(.horizontal)
+                
+            } else {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Pattern")
+                        .font(.headline)
+                    
+                    if showPatternEditor || project.patternText != nil {
+                        // source: https://www.appcoda.com/learnswiftui/swiftui-texteditor.html
+                        // source: https://dev.to/simrandotdev/swiftui-fix-cannot-convert-bindingstring-to-binding-in-textfield-5h5f#:~:text=Aug%2012%2C%202025-,SwiftUI%20Fix:%20Cannot%20Convert%20Binding%20to%20Binding,empty%20string%20if%20it's%20nil.
+                        TextEditor(
+                            text: Binding(
+                                get: { project.patternText ?? "" },
+                                set: { project.patternText = $0 }
+                            )
+                        )
+                        .frame(minHeight: 200)
+                        .padding(8)
+                        .background(.thinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        
+                    } else {
+                        
+                        Button {
+                            showPatternEditor = true
+                        } label: {
+                            Label("Add Pattern", systemImage: "text.badge.plus")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.title)
+                        
                     }
                 }
+                .padding(.horizontal)
             }
-            .sheet(isPresented: $showEditor) {
-                CounterEditorView(project: project)
+        }
+        .sheet(isPresented: $showEditor) {
+            CounterEditorView(project: project)
+        }
+        .sheet(isPresented: $showCounterPicker) {
+            CounterPickerView(
+                counters: project.counters,
+                selectedCounter: $selectedCounter
+            )
+        }
+        .onChange(of: selectedCounter) { oldValue, newValue in
+            guard newValue != nil else { return }
+            
+            audioIsSelected = true
+            recognizer.startRecording()
+        }
+        .onChange(of: recognizer.nextCount) { oldValue, newValue in
+            guard recognizer.isRecording else { return }
+            
+            guard let counter = selectedCounter else {return}
+            if newValue > counter.count {
+                counter.count = newValue
             }
-            .sheet(isPresented: $showLineCounter) {
-                LinePlaceHolderTableView()
-            }
-            .sheet(isPresented: $showCounterPicker) {
-                CounterPickerView(
-                    counters: project.counters,
-                    selectedCounter: $selectedCounter
-                )
-            }
-            .onChange(of: selectedCounter) { oldValue, newValue in
-                guard newValue != nil else { return }
-
-                audioIsSelected = true
-                recognizer.startRecording()
-            }
-            .onChange(of: recognizer.nextCount) { oldValue, newValue in
-                guard recognizer.isRecording else { return }
-
-                guard let counter = selectedCounter else {return}
-                if newValue > counter.count {
-                    counter.count = newValue
-                }
-            }
-            .onAppear {
-                recognizer.requestPermissions()
-            }
+        }
+        .onAppear {
+            recognizer.requestPermissions()
+        }
         .frame(maxWidth: .infinity)
     }
 }
@@ -134,12 +161,12 @@ private extension ProjectDescriptionView {
             .tint(.title)
             Button() {
                 if recognizer.isRecording {
-                        recognizer.stopRecording()
-                        audioIsSelected = false
-                        selectedCounter = nil
-                    } else {
-                        showCounterPicker = true
-                    }
+                    recognizer.stopRecording()
+                    audioIsSelected = false
+                    selectedCounter = nil
+                } else {
+                    showCounterPicker = true
+                }
             }
             label: {
                 Label("Audio", systemImage: "microphone")
