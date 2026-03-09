@@ -26,8 +26,10 @@ TODO EVE SUNDAY:
 [DONE] Edit project names
 [DONE] Notepad/upload pattern section for the parts that don't have pdf
 [DONE] Launch screen
+[DONE] Accessibility audit and VoiceOver testing
 5. FIX AUDIO ISSUES
 6. document in a README file
 7. Code comments (like crazy)
 9. Make splash screen more verbose
-10. Accessibility audit and VoiceOver testing
+10. Edit the marketing materials 
+

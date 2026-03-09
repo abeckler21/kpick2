@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftData
 
+// https://www.hackingwithswift.com/quick-start/swiftdata/why-are-swiftdata-models-created-as-classes
+// Counter model contains a name and a count, and is stored persistently in the app data
 @Model
 class Counter {
     var name: String

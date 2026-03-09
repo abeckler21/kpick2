@@ -5,13 +5,14 @@
 //  Created by Eve Tanios on 2/26/26.
 //
 
-// todo
+
 import SwiftUI
 import SwiftData
 import PDFKit
 // source: https://developer.apple.com/documentation/SwiftData/Defining-data-relationships-with-enumerations-and-model-classes
 // source: https://www.hackingwithswift.com/quick-start/swiftdata/how-to-define-swiftdata-models-using-the-model-macro
 
+// View that shows detailed project information: counters, patterns, and project notes
 struct ProjectDescriptionView: View {
     @Bindable var project: Project
     // for the audio button
@@ -26,6 +27,7 @@ struct ProjectDescriptionView: View {
     
     // counter picker for audio button
     @State private var showCounterPicker = false
+    // selected counter for the Audio function
     @State private var selectedCounter: Counter?
     
     // https://www.hackingwithswift.com/quick-start/swiftui/how-to-position-views-in-a-grid-using-lazyvgrid-and-lazyhgrid
@@ -43,11 +45,13 @@ struct ProjectDescriptionView: View {
                 .font(.largeTitle.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
+            // MARK: COUNTER DISPLAY
             Buttons
                 .padding(.horizontal)
             VStack(alignment: .leading, spacing: 16) {
                 Text("Counters")
                     .font(.headline)
+                // scroll view of counters in a grid format
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(project.counters) { counter in
@@ -62,12 +66,14 @@ struct ProjectDescriptionView: View {
             .padding(.horizontal)
             
             // MARK: PATTERN PDF DISPLAY
+            // if the project was from the project explorer page, then display pdf
             if let pdfURL = rawPDFURL {
                 PDFRemoteView(url: pdfURL)
                     .frame(height: 350)
                     .padding(.horizontal)
                 
             } else {
+                // if project was user created, show a text field for user notes
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Pattern Notes")
                         .font(.headline)
@@ -85,7 +91,7 @@ struct ProjectDescriptionView: View {
                         .padding(8)
                         .background(.thinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
+                    // MARK: ADD PATTERN BUTTON
                     } else {
                         
                         Button {
@@ -102,21 +108,25 @@ struct ProjectDescriptionView: View {
                 .padding(.horizontal)
             }
         }
+        // sheet popup to edit counters
         .sheet(isPresented: $showEditor) {
             CounterEditorView(project: project)
         }
+        // sheet popup to pick a counter to increment when Audio counting is selected
         .sheet(isPresented: $showCounterPicker) {
             CounterPickerView(
                 counters: project.counters,
                 selectedCounter: $selectedCounter
             )
         }
+        // if there is a selected counter for audio, then start the audio recording
         .onChange(of: selectedCounter) { oldValue, newValue in
             guard newValue != nil else { return }
             
             audioIsSelected = true
             recognizer.startRecording()
         }
+        // if the count value has changed because of an audio command, update the new count value for the counter
         .onChange(of: recognizer.nextCount) { oldValue, newValue in
             guard recognizer.isRecording else { return }
             
@@ -125,6 +135,7 @@ struct ProjectDescriptionView: View {
                 counter.count = newValue
             }
         }
+        // request user permissions for audio recording
         .onAppear {
             recognizer.requestPermissions()
         }
@@ -132,10 +143,12 @@ struct ProjectDescriptionView: View {
     }
 }
 
+// MARK: COUNTER BUTTONS
 // private extension since too complex for the compiler
 private extension ProjectDescriptionView {
     var Buttons: some View {
         HStack {
+            // Add counter button
             Button() {
                 let newCounter = Counter(name: "Global")
                 project.counters.append(newCounter)
@@ -146,6 +159,7 @@ private extension ProjectDescriptionView {
             .accessibilityLabel("Add Counter")
             .buttonStyle(.borderedProminent)
             .tint(.title)
+            // Edit counter button
             Button() {
                 showEditor = true
             }
@@ -155,15 +169,19 @@ private extension ProjectDescriptionView {
             .accessibilityLabel("Edit Existing Counters")
             .buttonStyle(.borderedProminent)
             .tint(.title)
+            // Audio recording button
             Button() {
+                // if recording and button pressed, stop recording and de-select a counter for audio
                 if recognizer.isRecording {
                     recognizer.stopRecording()
                     audioIsSelected = false
                     selectedCounter = nil
                 } else {
+                    // show the counter picker sheet if audio button is pressed
                     showCounterPicker = true
                 }
             }
+            // change the label and the color depending on if audio is recording or not
             label: {
                 Label(audioIsSelected ? "Stop" : "Audio", systemImage: "microphone")
             }

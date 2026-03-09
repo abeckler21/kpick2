@@ -7,6 +7,10 @@
 
 import SwiftData
 
+// https://www.hackingwithswift.com/quick-start/swiftdata/why-are-swiftdata-models-created-as-classes
+// the Project model contains a project name, a list of Counters, and pattern text information
+// if the Project was from a pre-existing Pattern (in the pattern explorer tab), then a pdfFile is associated with it
+// if the Project was created by the user, then a patternText box can be edited by the user to contain project notes
 @Model
 class Project {
     var name: String

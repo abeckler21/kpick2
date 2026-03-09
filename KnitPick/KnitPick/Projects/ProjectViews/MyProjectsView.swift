@@ -9,13 +9,18 @@ import SwiftUI
 import SwiftData
 
 
+// View to show all existing projects as a list
+// user can add, delete and rename projects
 struct MyProjectsView: View {
+    // query in order to access the Project Model in the app data
     @Query var projects: [Project]
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
+    // show the project name/delete editor sheet
     @State var showEditor: Bool = false
     var body: some View {
         NavigationStack {
+            // Buttons to add or edit projects
             HStack {
                 Button() {
                     let newProject = Project(name: "New Project", counters: [Counter(name: "Global")])
@@ -35,6 +40,7 @@ struct MyProjectsView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.title)
             }
+            // show project rows in a table format
             List {
                 ForEach(projects) { item in
                     NavigationLink(value: item) {
@@ -45,6 +51,7 @@ struct MyProjectsView: View {
                 .onDelete(perform: deleteProjects)
             }
             .navigationTitle("My Projects")
+            // destination when clicked is to the projectDescriptionView for the specific project
             .navigationDestination(for: Project.self) { proj in ProjectDescriptionView(project: proj)
             }
         }
@@ -56,20 +63,22 @@ struct MyProjectsView: View {
                 }
             }
         }
+        // starter projects when app is first loaded
         .onAppear {
             addStarterProjects()
         }
+        // edit and delete existing projects sheet
         .sheet(isPresented: $showEditor) {
             ProjectEditorView()
         }
     }
-    
+    // delete given project using the index of the project that was tapped
     func deleteProjects(at offsets: IndexSet) {
         for index in offsets {
             context.delete(projects[index])
         }
     }
-    // if there are no projects added by the user, put in these projects
+    // when app is first loaded, put in these "starter" projects as examples
     func addStarterProjects() {
         if projects.isEmpty {
             let starters = [

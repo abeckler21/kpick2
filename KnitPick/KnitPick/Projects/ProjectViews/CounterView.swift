@@ -8,12 +8,15 @@
 import SwiftUI
 import SwiftData
 
+// View to show counters display on ProjectDescriptionView
+// Adaptable grid that displays a variable num of counters per row depending on phone size
 struct CounterView: View {
     @Bindable var counter: Counter
     
     var body: some View {
         VStack {
             Text("\(counter.name)")
+            // increment and decrement buttons horizontal of counter name
             HStack {
                 Button("-") {
                     if counter.count > 0 {
