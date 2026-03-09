@@ -29,7 +29,7 @@ TODO EVE SUNDAY:
 [DONE] Accessibility audit and VoiceOver testing
 5. FIX AUDIO ISSUES
 6. document in a README file
-7. Code comments (like crazy)
+[DONE] Code comments (like crazy)
 9. Make splash screen more verbose
 10. Edit the marketing materials 
 

@@ -21,7 +21,10 @@ struct ProjectDescriptionView: View {
     @State private var showPatternEditor = false
     // for voice recording increment function
     @State private var recognizer = SpeechRecognizer()
+    // show editor for audio
     @State private var showEditor = false
+    // var to see if the text field is active
+    @FocusState private var isFocusedTextField: Bool
     // use this to add patterns while app is running
     @Environment(\.modelContext) private var context
     
@@ -43,8 +46,11 @@ struct ProjectDescriptionView: View {
         VStack {
             Text(project.name)
                 .font(.largeTitle.bold())
+                .foregroundStyle(Color.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
+                .padding(.vertical, 10)
+                .background(Color("TitleColor"))
             // MARK: COUNTER DISPLAY
             Buttons
                 .padding(.horizontal)
@@ -81,16 +87,26 @@ struct ProjectDescriptionView: View {
                     if showPatternEditor || project.patternText != nil {
                         // source: https://www.appcoda.com/learnswiftui/swiftui-texteditor.html
                         // source: https://dev.to/simrandotdev/swiftui-fix-cannot-convert-bindingstring-to-binding-in-textfield-5h5f#:~:text=Aug%2012%2C%202025-,SwiftUI%20Fix:%20Cannot%20Convert%20Binding%20to%20Binding,empty%20string%20if%20it's%20nil.
+                        // source for done button to stop editing: https://www.hackingwithswift.com/quick-start/swiftui/how-to-dismiss-the-keyboard-for-a-textfield
                         TextEditor(
                             text: Binding(
                                 get: { project.patternText ?? "" },
                                 set: { project.patternText = $0 }
                             )
                         )
+                        .focused($isFocusedTextField)
                         .frame(minHeight: 200)
                         .padding(8)
                         .background(.thinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .toolbar { // add the done button for the keyboard which will dismiss the keyboard
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+                                Button("Done") {
+                                    isFocusedTextField = false
+                                }
+                            }
+                        }
                     // MARK: ADD PATTERN BUTTON
                     } else {
                         

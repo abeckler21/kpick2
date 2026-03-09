@@ -44,7 +44,7 @@ struct MyProjectsView: View {
             List {
                 ForEach(projects) { item in
                     NavigationLink(value: item) {
-                        ProjectRow(project: item)
+                        ProjectRowView(project: item)
                     }
                 }
                 // when swiped to delete, remove a project
