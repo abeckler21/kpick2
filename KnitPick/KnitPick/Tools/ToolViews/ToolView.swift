@@ -30,10 +30,6 @@ struct ToolView: View {
         NavigationStack(path: $path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("Tools")
-                        .font(.system(size: 36, weight: .bold))
-                        .padding(.top, 8)
-
                     LazyVGrid(columns: columns, spacing: 20) {
                         ToolCard(title: "Common\nStitches") {
                             path.append(.commonStitches)
@@ -56,7 +52,7 @@ struct ToolView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Tools")
             // set destination as stitch view or placeholder view
             .navigationDestination(for: ToolType.self) { route in
                 switch route {

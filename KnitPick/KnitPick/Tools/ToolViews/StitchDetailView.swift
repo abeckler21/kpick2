@@ -18,8 +18,12 @@ struct StitchDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
                 Text(stitch.name)
-                    .font(.system(size: 34, weight: .bold))
-                    .padding(.top, 4)
+                    .font(.largeTitle.bold())
+                    .foregroundStyle(Color.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                    .background(Color("TitleColor"))
 
                 Divider()
 

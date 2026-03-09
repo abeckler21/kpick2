@@ -46,10 +46,6 @@ struct CategoriesView: View {
             if networkMonitor.isConnected {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("All Patterns")
-                            .font(.system(size: 36, weight: .bold))
-                            .padding(.top, 8)
-                        
                         TextField("Search categories or patterns", text: $searchText)
                             .padding(12)
                             .background(Color(.systemGray6))
@@ -143,7 +139,7 @@ struct CategoriesView: View {
                     .padding(.horizontal, 20)
                     .padding(.bottom, 24)
                 }
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("All Patterns")
                 // define navigation destinations for routes
                 .navigationDestination(for: PatternRoute.self) { route in
                     switch route {
